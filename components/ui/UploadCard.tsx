@@ -27,7 +27,7 @@ export default function UploadCard() {
           Maximum size: 50MB
         </p>
 
-        <button className="mt-6 rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium transition hover:bg-slate-100">
+        <button className="mt-6 rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-100">
           Browse Files
         </button>
 

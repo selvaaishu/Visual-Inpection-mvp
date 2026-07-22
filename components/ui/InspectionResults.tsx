@@ -19,7 +19,7 @@ export default function InspectionResults() {
 
         <div className="flex justify-between">
           <span className="text-slate-500">Defect Type</span>
-          <span className="font-semibold">Hairline Crack</span>
+          <span className="font-semibold text-slate-800">Hairline Crack</span>
         </div>
 
         <div className="flex items-center justify-between">
@@ -29,12 +29,12 @@ export default function InspectionResults() {
 
         <div className="flex justify-between">
           <span className="text-slate-500">Affected Area</span>
-          <span className="font-semibold">12%</span>
+          <span className="font-semibold text-slate-800">12%</span>
         </div>
 
         <div className="flex justify-between">
           <span className="text-slate-500">Location</span>
-          <span className="font-semibold">Column B4</span>
+          <span className="font-semibold text-slate-800">Column B4</span>
         </div>
 
         <div>
@@ -43,7 +43,7 @@ export default function InspectionResults() {
               Confidence Score
             </span>
 
-            <span className="font-semibold">
+            <span className="font-semibold text-slate-800">
               94%
             </span>
           </div>
