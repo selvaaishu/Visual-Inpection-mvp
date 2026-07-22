@@ -1,4 +1,28 @@
-export default function UploadCard() {
+"use client";
+
+import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
+
+interface UploadCardProps {
+  onFileSelected: (file: File) => void;
+  onSubmit: () => void;
+  hasFile: boolean;
+  isPending: boolean;
+}
+
+export default function UploadCard({
+  onFileSelected,
+  onSubmit,
+  hasFile,
+  isPending,
+}: UploadCardProps) {
+  const [isDragging, setIsDragging] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleFiles(files: FileList | null) {
+    const file = files?.[0];
+    if (file) onFileSelected(file);
+  }
+
   return (
     <section className="min-h-[620px] rounded-2xl bg-white p-8 shadow-md">
 
@@ -11,7 +35,23 @@ export default function UploadCard() {
       </p>
 
       {/* Upload Area */}
-      <div className="flex h-80 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 transition hover:border-blue-500 hover:bg-blue-50">
+      <div
+        onDragOver={(e: DragEvent<HTMLDivElement>) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={(e: DragEvent<HTMLDivElement>) => {
+          e.preventDefault();
+          setIsDragging(false);
+          handleFiles(e.dataTransfer.files);
+        }}
+        className={`flex h-80 flex-col items-center justify-center rounded-2xl border-2 border-dashed transition ${
+          isDragging
+            ? "border-blue-500 bg-blue-50"
+            : "border-slate-300 bg-slate-50 hover:border-blue-500 hover:bg-blue-50"
+        }`}
+      >
 
         <div className="mb-4 text-6xl">
           ☁️
@@ -27,14 +67,31 @@ export default function UploadCard() {
           Maximum size: 50MB
         </p>
 
-        <button className="mt-6 rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-100">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="mt-6 rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-100"
+        >
           Browse Files
         </button>
 
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleFiles(e.target.files)}
+        />
+
       </div>
 
-      <button className="mt-8 w-full rounded-xl bg-blue-600 py-4 text-lg font-semibold text-white transition hover:bg-blue-700">
-        Inspect Surface
+      <button
+        type="button"
+        onClick={onSubmit}
+        disabled={!hasFile || isPending}
+        className="mt-8 w-full rounded-xl bg-blue-600 py-4 text-lg font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+      >
+        {isPending ? "Analyzing..." : "Inspect Surface"}
       </button>
 
     </section>
