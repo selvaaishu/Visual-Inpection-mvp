@@ -2,19 +2,19 @@
 
 import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
 
-interface UploadCardProps {
+interface DroneUploadCardProps {
   onFileSelected: (file: File) => void;
   onSubmit: () => void;
   hasFile: boolean;
   isPending: boolean;
 }
 
-export default function UploadCard({
+export default function DroneUploadCard({
   onFileSelected,
   onSubmit,
   hasFile,
   isPending,
-}: UploadCardProps) {
+}: DroneUploadCardProps) {
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,16 +25,15 @@ export default function UploadCard({
 
   return (
     <section className="min-h-[620px] rounded-2xl bg-white p-8 shadow-md">
-
       <h2 className="mb-2 text-2xl font-bold text-slate-800">
-        Upload Concrete Surface
+        Upload Drone Image
       </h2>
 
       <p className="mb-6 text-slate-500">
-        Upload a concrete surface image for AI-assisted structural defect detection.
+        Upload a drone-captured image of a building or concrete structure for
+        AI-assisted defect detection.
       </p>
 
-      {/* Upload Area */}
       <div
         onDragOver={(e: DragEvent<HTMLDivElement>) => {
           e.preventDefault();
@@ -52,19 +51,16 @@ export default function UploadCard({
             : "border-slate-300 bg-slate-50 hover:border-blue-500 hover:bg-blue-50"
         }`}
       >
-
-        <div className="mb-4 text-6xl">
-          ☁️
-        </div>
+        <div className="mb-4 text-6xl">🚁</div>
 
         <h3 className="text-xl font-semibold text-slate-800">
-          Drag & Drop Image
+          Drag & Drop Drone Image
         </h3>
 
         <p className="mt-2 text-center text-slate-500">
-          Support PNG, JPG and JPEG
+          Supports PNG, JPG and WEBP
           <br />
-          Maximum size: 50MB
+          Maximum size: 15MB
         </p>
 
         <button
@@ -82,7 +78,6 @@ export default function UploadCard({
           className="hidden"
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleFiles(e.target.files)}
         />
-
       </div>
 
       <button
@@ -91,9 +86,8 @@ export default function UploadCard({
         disabled={!hasFile || isPending}
         className="mt-8 w-full rounded-xl bg-blue-600 py-4 text-lg font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
       >
-        {isPending ? "Analyzing..." : "Inspect Surface"}
+        {isPending ? "Analyzing..." : "Inspect Structure"}
       </button>
-
     </section>
   );
 }
